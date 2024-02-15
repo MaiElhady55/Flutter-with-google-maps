@@ -13,8 +13,9 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
   late GoogleMapController googleMapController;
   @override
   void initState() {
-    initialCameraPosition = CameraPosition(
+    initialCameraPosition = const CameraPosition(
         zoom: 12, target: LatLng(31.040848110485165, 31.37790918658407));
+
     super.initState();
   }
 
@@ -24,13 +25,21 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     super.dispose();
   }
 
+  void initMapStyle() async {
+    String nightMapStyle = await DefaultAssetBundle.of(context)
+        .loadString('assets/map_styles/night_map_style.json');
+    googleMapController.setMapStyle(nightMapStyle);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         GoogleMap(
+            mapType: MapType.normal,
             onMapCreated: (controller) {
               googleMapController = controller;
+              initMapStyle();
             },
             // cameraTargetBounds: CameraTargetBounds(LatLngBounds(
             //     southwest: LatLng(30.81060297231051, 31.006794158157287),
@@ -44,8 +53,11 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
                 onPressed: () {
                   // CameraPosition newLocation = const CameraPosition(
                   //    zoom: 12, target: LatLng(30.786924930349898, 31.00083304398054));
-                  googleMapController.animateCamera(
-                      CameraUpdate.newLatLng(LatLng(30.786924930349898, 31.00083304398054)));
+                  // googleMapController.animateCamera(
+                  //     CameraUpdate.newCameraPosition(newLocation));
+                  //OOOOORRRRRR depend on what you need to update
+                  googleMapController.animateCamera(CameraUpdate.newLatLng(
+                      const LatLng(30.786924930349898, 31.00083304398054)));
                 },
                 child: const Text('Change Location')))
       ],
