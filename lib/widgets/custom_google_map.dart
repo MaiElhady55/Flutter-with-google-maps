@@ -21,6 +21,9 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     initialCameraPosition = const CameraPosition(
         zoom: 12, target: LatLng(31.040848110485165, 31.37790918658407));
     initMarkers();
+    initPolylines();
+    initPolygons();
+    initCircles();
     super.initState();
   }
 
@@ -30,6 +33,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     super.dispose();
   }
 
+//change style of Map
   void initMapStyle() async {
     String nightMapStyle = await DefaultAssetBundle.of(context)
         .loadString('assets/map_styles/night_map_style.json');
@@ -68,12 +72,83 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     setState(() {});
   }
 
+//********************************************** */
+  Set<Polyline> polylines = {};
+  void initPolylines() {
+    Polyline polyline = const Polyline(
+        polylineId: PolylineId('1'),
+        points: [
+          LatLng(31.03751258256957, 31.402736503836568),
+          LatLng(31.109379649336407, 31.30261269990944),
+          LatLng(31.062240642241903, 31.399094208169885)
+        ],
+        color: Colors.red,
+        zIndex: 2,
+        startCap: Cap.roundCap,
+        width: 5);
+    Polyline polyline2 = const Polyline(
+        polylineId: PolylineId('2'),
+        points: [
+          LatLng(31.062310963505734, 31.308072742075833),
+          LatLng(31.11072439864407, 31.36359918911516),
+        ],
+        color: Colors.black,
+        zIndex: 1,
+        patterns: [PatternItem.dot],
+        geodesic: true,
+        startCap: Cap.roundCap,
+        width: 5);
+
+    polylines.add(polyline);
+    polylines.add(polyline2);
+  }
+
+//********************************************** */
+  Set<Polygon> polygons = {};
+  void initPolygons() {
+    Polygon polygon = Polygon(
+        polygonId: const PolygonId('1'),
+        points: const [
+          LatLng(31.09626842897352, 31.29828230546987),
+          LatLng(31.0627112841415, 31.308209478768074),
+          LatLng(31.058655461629243, 31.240412349630695),
+          LatLng(31.09626842897352, 31.29828230546987),
+        ],
+        fillColor: Colors.black.withOpacity(0.5),
+        strokeWidth: 3,
+        holes: const [
+          [
+            LatLng(31.07358695835032, 31.28535878902533),
+            LatLng(31.063618834103806, 31.281980762474404),
+            LatLng(31.066867616872553, 31.249198004346063),
+          ]
+        ]);
+    polygons.add(polygon);
+  }
+
+
+//********************************************** */
+  Set<Circle> circles = {};
+  void initCircles() {
+    Circle circle =Circle(circleId: CircleId('1'),
+    center: LatLng(31.040446979157814, 31.341544230648935),
+    radius: 1000,
+fillColor: Colors.red,
+strokeWidth: 3
+    );
+
+  circles.add(circle);
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         GoogleMap(
+            zoomControlsEnabled: false, //to hide buttons + or -
             markers: markers,
+            polylines: polylines,
+            polygons: polygons,
+            circles: circles,
             mapType: MapType.normal,
             onMapCreated: (controller) {
               googleMapController = controller;
@@ -93,6 +168,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
                   //    zoom: 12, target: LatLng(30.786924930349898, 31.00083304398054));
                   // googleMapController.animateCamera(
                   //     CameraUpdate.newCameraPosition(newLocation));
+
                   //OOOOORRRRRR depend on what you need to update
                   googleMapController.animateCamera(CameraUpdate.newLatLng(
                       const LatLng(30.786924930349898, 31.00083304398054)));
