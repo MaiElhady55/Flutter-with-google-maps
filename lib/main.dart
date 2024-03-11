@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:googlemaps_app/widgets/custom_google_map.dart';
+import 'package:googlemaps_app/live_location_tracker/screens/live_location_tracker.dart';
+//import 'package:googlemaps_app/widgets/custom_google_map.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const CustomGoogleMap(),
+      home: const LiveLocationTrackerScreen(),
     );
   }
 }

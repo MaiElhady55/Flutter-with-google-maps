@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>googlemaps_app</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>this app requries to your loction to display your current position on google map</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
