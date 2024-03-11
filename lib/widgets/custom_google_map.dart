@@ -40,6 +40,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     googleMapController.setMapStyle(nightMapStyle);
   }
 
+//********************************************** */
 //Change marker size if i get it from api and i can not acces it
   Future<Uint8List> getImageFromRawData(
       {required String image, required double width}) async {
@@ -126,19 +127,19 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     polygons.add(polygon);
   }
 
-
 //********************************************** */
   Set<Circle> circles = {};
   void initCircles() {
-    Circle circle =Circle(circleId: CircleId('1'),
-    center: LatLng(31.040446979157814, 31.341544230648935),
-    radius: 1000,
-fillColor: Colors.red,
-strokeWidth: 3
-    );
+    Circle circle = const Circle(
+        circleId: CircleId('1'),
+        center: LatLng(31.040446979157814, 31.341544230648935),
+        radius: 1000,
+        fillColor: Colors.red,
+        strokeWidth: 3);
 
-  circles.add(circle);
+    circles.add(circle);
   }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
