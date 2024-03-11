@@ -72,6 +72,11 @@ class _LiveLocationTrackerScreenState extends State<LiveLocationTrackerScreen> {
       CameraPosition cameraPosition = CameraPosition(
           target: LatLng(locationData.latitude!, locationData.longitude!),
           zoom: 12);
+      Marker myLocationMarker = Marker(
+          markerId: const MarkerId('1'),
+          position: LatLng(locationData.latitude!, locationData.longitude!));
+      markers.add(myLocationMarker);
+      setState(() {});
       googleMapController
           ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
     });
@@ -88,12 +93,15 @@ class _LiveLocationTrackerScreenState extends State<LiveLocationTrackerScreen> {
     }
   }
 
+//Markers
+  Set<Marker> markers = {};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
           zoomControlsEnabled: false, //to hide buttons + or -
           mapType: MapType.normal,
+          markers: markers,
           onMapCreated: (controller) {
             googleMapController = controller;
             initMapStyle();
